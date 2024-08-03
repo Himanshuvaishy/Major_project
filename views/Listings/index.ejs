@@ -1,0 +1,28 @@
+<% layout("/layouts/boilerplate") %>
+<body class="bg-gradient-to-br from-gray-100 via-gray-300 to-gray-500 text-gray-900 flex items-center justify-center min-h-screen p-4">
+
+  <div class="container mx-auto px-4 max-w-full">
+    <!-- Header -->
+    <h2 class="text-center mt-2 text-4xl font-extrabold text-white mb-12 border-b-4 border-teal-500 pb-4 bg-gradient-to-r from-teal-400 to-teal-600 rounded-md shadow-lg transition-transform duration-300 hover:scale-105 hover:shadow-2xl">
+      All Listings Details
+    </h2>
+
+    <!-- Card Container -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+      <% for (let listing of allListings) { %>
+        <a href="/listings/<%= listing._id %>" class="block rounded-lg overflow-hidden shadow-lg bg-white transition-transform transform hover:scale-105 hover:shadow-2xl">
+          <!-- Image -->
+          <img src="<%= listing.image.url %>" alt="Card Image" class="w-full h-48 object-cover">
+      
+          <!-- Card Content -->
+          <div class="p-4">
+            <span class="text-xl font-semibold mb-2 text-gray-800"><%= listing.title %> &#8377; <span class="text-gray-600"><%= listing.price.toLocaleString("en-IN") %>/night</span></span>
+            <p class="text-gray-600 mb-2 line-clamp-2"><%= listing.description %></p>
+            <p class="text-blue-500 hover:underline">Click for more details</p>
+          </div>
+        </a>
+      <% } %>
+    </div>
+  </div>
+
+</body>

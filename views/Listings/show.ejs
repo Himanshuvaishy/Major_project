@@ -1,0 +1,28 @@
+
+<% layout("/layouts/boilerplate") %>
+<div class="bg-gradient-to-br from-gray-100 via-gray-300 to-gray-500 flex items-center justify-center min-h-screen p-6">
+  <div class="w-full max-w-md rounded-lg overflow-hidden shadow-2xl bg-white transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
+    <!-- Image -->
+    <img src="<%= listing.image.url %>" alt="Listing Image" class="w-full h-80 object-cover rounded-t-lg">
+
+    <!-- Content -->
+    <div class="p-6">
+      <h3 class="text-4xl font-bold text-gray-900 mb-4 border-b-2 border-teal-500 pb-2">Listing Details</h3>
+      <ul class="space-y-4">
+        <li class="text-2xl font-semibold text-gray-800"><%= listing.title %></li>
+        <li class="text-gray-700 text-lg"><%= listing.description %></li>
+        <li class="text-xl font-medium text-gray-800">&#8377;<%= listing.price.toLocaleString("en-IN") %></li>
+        <li class="text-lg text-gray-600"><%= listing.country %></li>
+        <li class="text-lg text-gray-600"><%= listing.location %></li>
+      </ul>
+      <div class="mt-6 flex justify-between items-center">
+        <a href="/listings/<%= listing._id %>/edit" class="text-teal-600 hover:text-teal-800 font-semibold transition-colors">Edit this Listing</a>
+        <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
+          <button type="submit" class="bg-red-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-700 transition-colors">Delete this Listing</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
