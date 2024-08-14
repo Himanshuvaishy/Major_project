@@ -8,7 +8,7 @@
     </h3>
 
     <!-- Form -->
-    <form method="post" action="/listings" class="space-y-4" novalidate>
+    <form method="post" action="/listings" class="space-y-4" novalidate enctype="multipart/form-data">
       <div>
         <label for="title" class="block text-gray-700 font-medium mb-2">Title</label>
         <input id="title" name="listing[title]" placeholder="Enter title" type="text" required
@@ -23,9 +23,10 @@
         <div class="text-red-500 text-sm mt-1 hidden" id="description-error">Description is required.</div>
       </div>
 
+     
       <div>
-        <label for="image" class="block text-gray-700 font-medium mb-2">Image URL/Link</label>
-        <input id="image" name="listing[image]" placeholder="Enter image URL/Link" type="text"
+        <label for="image" class="block text-gray-700 font-medium mb-2">Upload Image Listing </label>
+        <input id="image" name="listing[image]" placeholder="Enter image URL/Link" type="file" required
           class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-300">
         <div class="text-red-500 text-sm mt-1 hidden" id="image-error">Image URL/Link is optional.</div>
       </div>

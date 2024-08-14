@@ -1,43 +1,58 @@
 <nav class="bg-gradient-to-r from-teal-500 to-teal-700 shadow-lg">
-    <div class="container mx-auto px-6 py-6 flex items-center justify-between">
+  <div class="container mx-auto px-6 py-6 flex items-center justify-between">
+    <!-- Left Side Links -->
+    <div class="flex items-center space-x-4">
       <!-- Logo -->
-      <a href="/" class="font-extrabold py-2 px-6 text-3xl capitalize  text-white hover:bg-teal-700 hover:text-gray-100 transition-all duration-300 rounded-lg shadow-lg transform hover:scale-105 hover:shadow-xl">
-        wanderLust🚀   
-      </a>
-  
-      <!-- Hamburger Menu for Mobile -->
-      <div class="block lg:hidden">
-        <button id="menu-btn" class="text-white focus:outline-none">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-        </button>
-      </div>
-  
-      <!-- Navigation Links -->
-      <div id="menu" class="hidden lg:flex lg:space-x-8">
-        <a href="/listings" class="text-white hover:bg-teal-600 px-3 py-2 rounded-md text-lg font-medium transition">Home</a>
-        <a href="/listings" class="text-white hover:bg-teal-600 px-3 py-2 rounded-md text-lg font-medium transition">All Listings</a>
-        <a href="/listings/new" class="text-white hover:bg-teal-600 px-3 py-2 rounded-md text-lg font-medium transition">Add Listing</a>
-        <a href="#" class="text-white hover:bg-teal-600 px-3 py-2 rounded-md text-lg font-medium transition">About</a>
+      <a href="/" class="font-extrabold text-3xl text-white transition-all duration-300 rounded-lg transform hover:scale-105 hover:text-gray-200">wanderLust🚀</a>
+      <a href="/listings" class="text-white hover:bg-teal-600 px-3 py-2 rounded-md text-lg font-medium transition">Explore</a>
+    </div>
+
+    <!-- Centered Search Bar -->
+    <div class="flex-grow flex items-center justify-center mx-4">
+      <div class="flex items-center border border-gray-300 rounded-md overflow-hidden">
+        <input type="text" placeholder="Search..." class="px-4 py-2 w-48 border-none focus:outline-none focus:ring-2 focus:ring-teal-400">
+        <button class="px-4 py-2 bg-teal-600 text-white hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500">Search</button>
       </div>
     </div>
-  
-    <!-- Mobile Menu -->
-  
-  <div id="mobile-menu" class="lg:hidden hidden bg-teal-700">
-    <a href="/listings" class="block px-4 py-2 text-white hover:bg-teal-600 transition">Home</a>
-    <a href="/listings" class="block px-4 py-2 text-white hover:bg-teal-600 transition">All Listings</a>
-    <a href="/listings/new" class="block px-4 py-2 text-white hover:bg-teal-600 transition">Add Listings</a>
-    <a href="#" class="block px-4 py-2 text-white hover:bg-teal-600 transition">Contact</a>
-  </div>
-    
-  </nav>
 
-  <script>
+    <!-- Hamburger Menu for Mobile -->
+    <div class="block lg:hidden">
+      <button id="menu-btn" class="text-white focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Right Side Links -->
+    <div class="hidden lg:flex lg:space-x-8">
+      <a href="/listings/new" class="text-white hover:bg-teal-600 px-3 py-2 rounded-md text-lg font-medium transition">Airbnb your home</a>
+      <% if (!currUser) { %>
+        <a href="/signup" class="text-white hover:bg-teal-600 px-3 py-2 rounded-md text-lg font-medium transition">Sign Up</a>
+        <a href="/login" class="text-white hover:bg-teal-600 px-3 py-2 rounded-md text-lg font-medium transition">Login</a>
+      <% } %>
+      <% if (currUser) { %>
+        <a href="/logout" class="text-white hover:bg-teal-600 px-3 py-2 rounded-md text-lg font-medium transition">Logout</a>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="lg:hidden hidden bg-teal-700">
+    <a href="/listings/new" class="text-white hover:bg-teal-600 px-3 py-2 rounded-md text-lg font-medium transition">Airbnb your home</a>
+    <% if (!currUser) { %>
+      <a href="/signup" class="text-white hover:bg-teal-600 px-3 py-2 rounded-md text-lg font-medium transition">Sign Up</a>
+      <a href="/login" class="text-white hover:bg-teal-600 px-3 py-2 rounded-md text-lg font-medium transition">Login</a>
+    <% } %>
+    <% if (currUser) { %>
+      <a href="/logout" class="text-white hover:bg-teal-600 px-3 py-2 rounded-md text-lg font-medium transition">Logout</a>
+    <% } %>
+  </div>
+</nav>
+
+<script>
   document.getElementById('menu-btn').addEventListener('click', function() {
     const menu = document.getElementById('mobile-menu');
     menu.classList.toggle('hidden');
   });
 </script>
-  

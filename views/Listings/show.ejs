@@ -1,28 +1,152 @@
-
 <% layout("/layouts/boilerplate") %>
-<div class="bg-gradient-to-br from-gray-100 via-gray-300 to-gray-500 flex items-center justify-center min-h-screen p-6">
-  <div class="w-full max-w-md rounded-lg overflow-hidden shadow-2xl bg-white transition-transform duration-300 hover:scale-105 hover:shadow-3xl">
-    <!-- Image -->
-    <img src="<%= listing.image.url %>" alt="Listing Image" class="w-full h-80 object-cover rounded-t-lg">
+<body class="bg-gradient-to-br from-gray-100 via-gray-300 to-gray-500 flex flex-col items-center justify-center min-h-screen p-6 space-y-6">
 
-    <!-- Content -->
-    <div class="p-6">
-      <h3 class="text-4xl font-bold text-gray-900 mb-4 border-b-2 border-teal-500 pb-2">Listing Details</h3>
-      <ul class="space-y-4">
-        <li class="text-2xl font-semibold text-gray-800"><%= listing.title %></li>
-        <li class="text-gray-700 text-lg"><%= listing.description %></li>
-        <li class="text-xl font-medium text-gray-800">&#8377;<%= listing.price.toLocaleString("en-IN") %></li>
-        <li class="text-lg text-gray-600"><%= listing.country %></li>
-        <li class="text-lg text-gray-600"><%= listing.location %></li>
-      </ul>
-      <div class="mt-6 flex justify-between items-center">
-        <a href="/listings/<%= listing._id %>/edit" class="text-teal-600 hover:text-teal-800 font-semibold transition-colors">Edit this Listing</a>
-        <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
-          <button type="submit" class="bg-red-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-700 transition-colors">Delete this Listing</button>
-        </form>
+  <!-- Full-width container for centered content -->
+  <div class="w-full max-w-4xl mx-auto space-y-6">
+    <h3 class="text-4xl font-bold text-gray-600 mb-4 border-b-2 border-teal-500 pb-2 text-center hover:text-teal-500 transition duration-300 ease-in-out">
+      <%= listing.title %>
+    </h3>
+    
+
+    <!-- Listing Section -->
+    <div class="w-full max-w-2xl mx-auto rounded-lg overflow-hidden shadow-2xl bg-white transition-transform duration-300 hover:scale-105 hover:shadow-3xl relative">
+      <!-- Image -->
+      <img src="<%= listing.image.url %>" alt="Listing Image" class="w-full h-80 object-cover rounded-t-lg">
+
+      <!-- Content -->
+      <div class="p-6">
+        <ul class="space-y-4">
+          <li class="text-lg text-gray-800"><strong>Created By:</strong> <%= listing.owner.username %></li>
+          <li class="text-lg text-gray-600"><%= listing.description %></li>
+          <li class="text-2xl font-semibold text-gray-800">&#8377;<%= listing.price.toLocaleString("en-IN") %></li>
+          <li class="text-lg text-gray-600"><%= listing.country %></li>
+          <li class="text-lg text-gray-600"><%= listing.location %></li>
+        </ul>
+      
+      
+        <% if (currUser && listing.owner._id.equals(currUser._id) ) { %>
+               <div class="mt-6 flex justify-between items-center">
+            <a href="/listings/<%= listing._id %>/edit" class="text-teal-600 hover:text-teal-800 font-semibold transition-colors">Edit this Listing</a>
+            <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
+              <button type="submit" class="bg-red-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-red-700 transition-colors">Delete this Listing</button>
+            </form>
+          </div>
+          <% } %>
+     
+        
+      </div>
+    </div>
+
+    <% if (currUser) { %>
+      <!-- Add Review Section -->
+      <div class="w-full max-w-2xl mx-auto rounded-lg overflow-hidden shadow-2xl bg-white transition-transform duration-300 hover:scale-105 hover:shadow-3xl relative mt-6">
+        <div class="p-6">
+          <h4 class="text-2xl font-semibold text-gray-800 mb-4 border-b-2 border-teal-500 pb-2">Leave a Review</h4>
+          <form id="reviewForm" action="/listings/<%= listing._id %>/reviews" method="POST">
+            <div class="mb-4">
+              <label class="block text-gray-700 mb-2">Rating</label>
+              <fieldset class="starability-slot">
+                <input type="radio" id="rate5" name="review[rating]" value="5" required />
+                <label for="rate5" title="5 stars" class="starability-star">★</label>
+    
+                <input type="radio" id="rate4" name="review[rating]" value="4" required />
+                <label for="rate4" title="4 stars" class="starability-star">★</label>
+    
+                <input type="radio" id="rate3" name="review[rating]" value="3" required />
+                <label for="rate3" title="3 stars" class="starability-star">★</label>
+    
+                <input type="radio" id="rate2" name="review[rating]" value="2" required />
+                <label for="rate2" title="2 stars" class="starability-star">★</label>
+    
+                <input type="radio" id="rate1" name="review[rating]" value="1" required />
+                <label for="rate1" title="1 star" class="starability-star">★</label>
+              </fieldset>
+              <div id="ratingError" class="text-red-500 text-sm mt-1 hidden">Please provide a rating between 1 and 5.</div>
+            </div>
+    
+            <div class="mb-4">
+              <label for="comment" class="block text-gray-700 mb-2">Comments</label>
+              <textarea name="review[comment]" id="comment" cols="30" rows="5" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500" required></textarea>
+              <div id="commentError" class="text-red-500 text-sm mt-1 hidden">Please provide a comment.</div>
+            </div>
+            
+            <button type="submit" class="bg-teal-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-teal-700 transition-colors">Submit</button>
+          </form>
+        </div>
+      </div>
+    <% } %>
+    
+    
+
+    
+      <!-- Reviews Section -->
+      <hr class="my-8 border-t-2 border-gray-300">
+      <div class="p-6">
+        <h4 class="text-3xl font-bold text-gray-900 mb-6 border-b-4 border-teal-500 pb-2">Reviews</h4>
+        <div class="flex flex-col gap-8">
+          <% for (review of listing.reviews) { %>
+            <div class="w-full">
+              <div class="bg-white rounded-lg shadow-lg p-6 transition-transform transform hover:scale-105 hover:shadow-xl duration-300 relative">
+                <div class="flex flex-col space-y-2 mb-4">
+                  <div class="text-lg font-semibold text-gray-800">@<%= review.author.username %></div>
+                  <div class="text-sm font-semibold text-gray-800 flex items-center space-x-1">
+                    <span></span>
+                    <div class="starability-result" data-rating="<%= review.rating %>">
+                      Rated: <%= review.rating %> stars
+                    </div>
+                  </div>
+                  
+                  <div class="text-xs text-gray-500"><%= new Date(review.createdAt).toLocaleDateString() %></div>
+                </div>
+                <p class="text-gray-700 mt-2">
+                  <span class="italic">" </span><%= review.comment %><span class="italic"> "</span>
+                </p>
+                <form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                  <button type="submit" class="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg shadow-md hover:bg-red-700 transition-colors">Delete</button>
+                </form>
+              </div>
+            </div>
+          <% } %>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var reviewForm = document.getElementById('reviewForm');
+      var ratingInput = document.getElementById('rating');
+      var commentTextarea = document.getElementById('comment');
+      var ratingError = document.getElementById('ratingError');
+      var commentError = document.getElementById('commentError');
 
+      reviewForm.addEventListener('submit', function(event) {
+        var rating = parseInt(ratingInput.value, 10);
+        var comment = commentTextarea.value.trim();
+        var valid = true;
+
+        // Reset errors
+        ratingError.classList.add('hidden');
+        commentError.classList.add('hidden');
+
+        // Validate rating
+        if (isNaN(rating) || rating < 1 || rating > 5) {
+          ratingError.textContent = 'Please provide a rating between 1 and 5.';
+          ratingError.classList.remove('hidden');
+          valid = false;
+        }
+
+        // Validate comment
+        if (comment === '') {
+          commentError.textContent = 'Please provide a comment.';
+          commentError.classList.remove('hidden');
+          valid = false;
+        }
+
+        if (!valid) {
+          event.preventDefault(); // Prevent form submission if not valid
+        }
+      });
+    });
+  </script>
+</body>
